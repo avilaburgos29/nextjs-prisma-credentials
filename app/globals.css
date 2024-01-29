@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body {
+    @apply bg-neutral-950;
+    font-family: 'Roboto', sans-serif;
+}
