@@ -1,6 +1,6 @@
 "use client";
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 function RegisterPage() {
 
@@ -10,12 +10,12 @@ function RegisterPage() {
   const onSubmit = handleSubmit(async(data) => {
     //console.log(data);
     if (data.password !== data.confirmPassword) {
-      return alert('Password and Confirm Password must be the same');
+      return alert("Password and Confirm Password must be the same");
     }
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(
         {
@@ -27,7 +27,7 @@ function RegisterPage() {
     });
 
     if (res.ok) {
-      router.push('/auth/login');
+      router.push("/auth/login");
     }
     //console.log(errors);
   });
@@ -35,7 +35,7 @@ function RegisterPage() {
   return (
     <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
 
-      <form onSubmit={onSubmit} className='w-1/4'>
+      <form onSubmit={onSubmit} className="w-1/4">
         <h1 className="text-slate-200 font-bold text-4xl mb-4">Register</h1>
 
         <label htmlFor="username" className="text-slate-500 mb-2 block text-sm">Username:</label>

@@ -8,20 +8,21 @@ function LoginPage() {
 
   const { register, handleSubmit, formState: {errors} } = useForm();
   const router = useRouter();
-
   const [error, setError] = useState(null);
   
-  const onSubmit = handleSubmit(async(data) => {
-    console.log(data);
-    const res = await signIn('credentials', {
-      username: data.email,
+  const onSubmit = handleSubmit(async (data) => {
+    //console.log(data);
+    const res = await signIn("credentials", {
+      email: data.email,
       password: data.password,
       redirect: false
     });
+    
     if (res.error) {
       setError(res.error);
     } else {
       router.push('/dashboard');
+      router.refresh();
     }
   });
 

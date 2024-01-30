@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import db from "@/libs/db";
 
-const authOptions = {
+export const authOptions = {
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -12,7 +12,7 @@ const authOptions = {
                 password: { label: "Password", type: "password", placeholder: "********"},
             },
             async authorize(credentials, req) {
-                console.log("credentials: ", credentials);
+                //console.log("credentials: ", credentials);
 
                 const userFound = await db.user.findUnique({
                     where: {
@@ -20,15 +20,12 @@ const authOptions = {
                     }
                 });
 
-                if (!userFound) throw new Error(JSON.stringify({
-                    status: 404,
-                    message: "User not found"
-                }));
-                console.log("userFound: ", userFound);
+                if (!userFound) throw new Error("User not found");
+                ///console.log("userFound: ", userFound);
 
                 const passwordMatch = await bcrypt.compare(credentials.password, userFound.password);
 
-                if (!passwordMatch) throw new Error("Wrong password");
+                if (!passwordMatch) throw new Error("User not found");
                 
                 return {
                     id: userFound.id,
@@ -37,7 +34,12 @@ const authOptions = {
                 }
             }
         })
-    ]
+    ],
+    pages : {
+        signIn: "/auth/login",
+    },
 };
-const authHandler = NextAuth(authOptions);
-export { authHandler as GET, authHandler as POST}
+
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST}
